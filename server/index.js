@@ -107,6 +107,13 @@ app.post('/searchTrack', function(req, res) {
   });
 });
 
+app.get('/getSongs', function(req, res) {
+  db.readEntries((result) => {
+    console.log(result);
+    res.send(result);
+  })
+});
+
 app.get('/callback', function(req, res) {
 
   // your application requests refresh and access tokens

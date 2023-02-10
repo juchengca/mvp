@@ -22,7 +22,7 @@ function Search( {onSearch} ) {
           <label>
             <input type="text" name="track" onChange={onChange}/>
           </label>
-          <input onClick={search} type="submit" value="Submit" />
+          <input onClick={search} type="submit" value="Search" />
         </form>
     </div>
 

@@ -17,6 +17,8 @@ var createTable = () => {
 }
 
 var createEntry = (name, artist, bpm, harkey, callback) => {
+  var conversionLetters = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+  harkey = conversionLetters[Number(harkey)];
   var sql = `INSERT INTO songs (name, artist, bpm, harkey) VALUES ('${name}', '${artist}', '${bpm}', '${harkey}')`;
   mysql_query(sql, function(err, result)   {
     if (err) {
@@ -26,4 +28,14 @@ var createEntry = (name, artist, bpm, harkey, callback) => {
   });
 }
 
-module.exports = { createEntry };
+var readEntries = (callback) => {
+  var sql = "SELECT * FROM songs";
+  mysql_query(sql, function(err, result)   {
+    if (err) {
+      console.log(err);
+    }
+    callback(result);
+  });
+}
+
+module.exports = { createEntry, readEntries };

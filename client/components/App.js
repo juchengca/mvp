@@ -28,17 +28,37 @@ function App() {
             type:"POST",
             data:{'search_url': field, 'access_token': access_token},
             success: (response) => {
-                console.log(response);
+                getSongs((res) => {
+                    setSongs(res);
+                })
             }
           })
         };
 
+    const getSongs = (callback) => {
+        $.ajax({
+            url:'/getSongs',
+            type:"GET",
+            data:'json',
+            //contentType:"application/json; charset=utf-8",
+            success: (response) => {
+            callback(response);
+            }
+        })
+        };
+
+    useEffect(() => {
+        getSongs((res) => {
+            setSongs(res);
+        })
+        }, []);
+
     return (
         <div>
-            <h1>Song Fetcher</h1>
+            <h1>Song Analysis Fetcher</h1>
             <a href='/login'>Login to Spotify</a>
             <Search onSearch={search}/>
-            <List />
+            <List songs={songs}/>
         </div>
     );
 }
