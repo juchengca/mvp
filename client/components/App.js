@@ -45,7 +45,7 @@ function App() {
             callback(response);
             }
         })
-        };
+    };
 
     useEffect(() => {
         getSongs((res) => {
@@ -54,9 +54,10 @@ function App() {
         }, []);
 
     return (
-        <div>
-            <h1>Song Analysis Fetcher</h1>
-            <a href='/login'>Login to Spotify</a>
+        <div style={{color: 'white', fontFamily: 'Helvetica', margin: '25px' }}>
+            <style>{'body { background-color: rgba(40, 40, 40, 1.0); }'}</style>
+            <h1>♬ Song Analysis Fetcher ♪</h1>
+            <a style={{color: 'skyblue'}} href='/login'>Login to Spotify</a>
             <Search onSearch={search}/>
             <List songs={songs}/>
         </div>

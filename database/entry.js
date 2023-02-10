@@ -7,7 +7,7 @@ mysql_query('show tables', function(err, result) {
 });
 
 var createTable = () => {
-  var sql = "CREATE TABLE songs (id int unsigned not null auto_increment, primary key (id), name VARCHAR(255), artist VARCHAR(255), bpm VARCHAR(255), harkey VARCHAR(255))";
+  var sql = "CREATE TABLE songs (id int unsigned not null auto_increment, primary key (id), name VARCHAR(255), artist VARCHAR(255), bpm VARCHAR(255), harkey VARCHAR(255), imgurl VARCHAR(255))";
   mysql_query(sql, function(err, result)   {
     if (err) {
       console.log(err);
@@ -16,10 +16,10 @@ var createTable = () => {
   });
 }
 
-var createEntry = (name, artist, bpm, harkey, callback) => {
+var createEntry = (name, artist, bpm, harkey, imgurl, callback) => {
   var conversionLetters = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
   harkey = conversionLetters[Number(harkey)];
-  var sql = `INSERT INTO songs (name, artist, bpm, harkey) VALUES ('${name}', '${artist}', '${bpm}', '${harkey}')`;
+  var sql = `INSERT INTO songs (name, artist, bpm, harkey, imgurl) VALUES ('${name}', '${artist}', '${bpm}', '${harkey}', '${imgurl}')`;
   mysql_query(sql, function(err, result)   {
     if (err) {
       console.log(err);

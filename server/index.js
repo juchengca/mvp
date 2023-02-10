@@ -90,6 +90,7 @@ app.post('/searchTrack', function(req, res) {
   spotify.searchSpotify(req.body, (result) => {
     entry.name = result.tracks.items[0].name;
     entry.artist = result.tracks.items[0].artists[0].name;
+    entry.imgurl = result.tracks.items[0].album.images[2].url.toString();
     // generate search url for audio analysis
     var id = result.tracks.items[0].id;
     var endpoint = 'https://api.spotify.com/v1/audio-analysis/';
@@ -97,9 +98,9 @@ app.post('/searchTrack', function(req, res) {
     req.body.search_url = search_url;
     // get audio analysis
     spotify.getDetails(req.body, (result) => {
-      entry.bpm = result.track.tempo.toString();
+      entry.bpm = Math.floor(result.track.tempo).toString();
       entry.harkey = result.track.key.toString();
-      db.createEntry(entry.name, entry.artist, entry.bpm, entry.harkey, () => {
+      db.createEntry(entry.name, entry.artist, entry.bpm, entry.harkey, entry.imgurl, () => {
         console.log('Entry successful: ', entry.name);
         res.send();
       });
@@ -109,7 +110,7 @@ app.post('/searchTrack', function(req, res) {
 
 app.get('/getSongs', function(req, res) {
   db.readEntries((result) => {
-    console.log(result);
+    //console.log(result);
     res.send(result);
   })
 });
