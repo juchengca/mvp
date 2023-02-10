@@ -4,6 +4,7 @@ var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var spotify = require('../helpers/spotify');
+var db = require('../database/entry');
 
 var client_id = '4b3b47eeab9f4e9aac51bba5fc463783'; // Your client id
 var client_secret = 'a3c9026446fc440592661142145521a2'; // Your secret
@@ -96,9 +97,12 @@ app.post('/searchTrack', function(req, res) {
     req.body.search_url = search_url;
     // get audio analysis
     spotify.getDetails(req.body, (result) => {
-      entry.bpm = result.track.tempo;
-      entry.harkey = result.track.key;
-      res.send(entry);
+      entry.bpm = result.track.tempo.toString();
+      entry.harkey = result.track.key.toString();
+      db.createEntry(entry.name, entry.artist, entry.bpm, entry.harkey, () => {
+        console.log('Entry successful: ', entry.name);
+        res.send();
+      });
     });
   });
 });
