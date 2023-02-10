@@ -74,18 +74,32 @@ app.get('/login', function(req, res) {
 });
 
 app.post('/searchTrack', function(req, res) {
-  console.log(req.body);
-  spotify.searchSpotify(req.body, (result) => {
-    //console.log(result.tracks.items[0]);
-    res.send(result);
-  });
-});
 
-app.post('/getDetails', function(req, res) {
-  console.log(req.body);
-  spotify.getDetails(req.body, (result) => {
-    console.log(result);
-    res.send(result);
+  var entry = {};
+  // generate search url
+  var field = req.body.search_url;
+  var field = field.split('--');
+  var endpoint = 'https://api.spotify.com/v1/search?q=';
+  var artist = field[0];
+  var song = field[1];
+  var mid_url = encodeURIComponent(encodeURIComponent('remaster track:' + song + ' artist:' + artist));
+  var search_url = endpoint + mid_url + '&type=track&market=US&limit=10&offset=5';
+  req.body.search_url = search_url;
+  // search spotify for track
+  spotify.searchSpotify(req.body, (result) => {
+    entry.name = result.tracks.items[0].name;
+    entry.artist = result.tracks.items[0].artists[0].name;
+    // generate search url for audio analysis
+    var id = result.tracks.items[0].id;
+    var endpoint = 'https://api.spotify.com/v1/audio-analysis/';
+    var search_url = endpoint + id;
+    req.body.search_url = search_url;
+    // get audio analysis
+    spotify.getDetails(req.body, (result) => {
+      entry.bpm = result.track.tempo;
+      entry.harkey = result.track.key;
+      res.send(entry);
+    });
   });
 });
 
