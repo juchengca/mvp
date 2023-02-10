@@ -29,15 +29,28 @@ function App() {
         var mid_url = encodeURIComponent(encodeURIComponent('remaster track:' + song + ' artist:' + artist));
         var search_url = endpoint + mid_url + '&type=track&market=US&limit=10&offset=5';
         $.ajax({
-            url:'/testSearch',
+            url:'/searchTrack',
             type:"POST",
             data:{'search_url': search_url, 'access_token': access_token},
             success: (response) => {
               console.log('Search success!');
-              setSongs(response.tracks.items[0]);
+              var id = response.tracks.items[0].id;
+              var endpoint2 = 'https://api.spotify.com/v1/audio-analysis/';
+              var search_url2 = endpoint2 + id;
+              $.ajax({
+                url:'/getDetails',
+                type:"POST",
+                data:{'search_url': search_url2, 'access_token': access_token},
+                success: function(res) {
+                    console.log(res);
+                }
+              });
+              /*
               for (var i = 0; i < response.tracks.items.length; i++) {
-                console.log(response.tracks.items[i].artists[0].name);
+                console.log(response.tracks.items[i]);
+                console.log(response.tracks.items[i].popularity);
               }
+              */
             }
           })
         };
@@ -47,7 +60,7 @@ function App() {
             <h1>Song Fetcher</h1>
             <a href='/login'>Login to Spotify</a>
             <Search onSearch={search}/>
-            <List songs={songs}/>
+            <List />
         </div>
     );
 }

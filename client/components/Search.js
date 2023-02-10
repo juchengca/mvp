@@ -2,14 +2,14 @@ import React, { Component, useState } from 'react';
 
 function Search( {onSearch} ) {
 
-  const[field, setField] = useState('')
+  const[field, setField] = useState('');
 
   const onChange = (e) => {
     setField(e.target.value);
   }
 
-  const search = () => {
-    console.log(field);
+  const search = (e) => {
+    e.preventDefault();
     onSearch(field);
   }
 
@@ -20,7 +20,7 @@ function Search( {onSearch} ) {
       <p>To search for a song, enter the artist then track name separated by a double dash (--)</p>
         <form>
           <label>
-            <input type="text" name="track" />
+            <input type="text" name="track" onChange={onChange}/>
           </label>
           <input onClick={search} type="submit" value="Submit" />
         </form>

@@ -73,9 +73,18 @@ app.get('/login', function(req, res) {
    */
 });
 
-app.post('/testSearch', function(req, res) {
+app.post('/searchTrack', function(req, res) {
   console.log(req.body);
   spotify.searchSpotify(req.body, (result) => {
+    //console.log(result.tracks.items[0]);
+    res.send(result);
+  });
+});
+
+app.post('/getDetails', function(req, res) {
+  console.log(req.body);
+  spotify.getDetails(req.body, (result) => {
+    console.log(result);
     res.send(result);
   });
 });
