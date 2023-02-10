@@ -1,17 +1,28 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 
-function Search() {
+function Search( {onSearch} ) {
+
+  const[field, setField] = useState('')
+
+  const onChange = (e) => {
+    setField(e.target.value);
+  }
+
+  const search = () => {
+    console.log(field);
+    onSearch(field);
+  }
 
   return (
 
     <div>
       <h3>Search:</h3>
+      <p>To search for a song, enter the artist then track name separated by a double dash (--)</p>
         <form>
           <label>
-            Name:
-            <input type="text" name="name" />
+            <input type="text" name="track" />
           </label>
-          <input type="submit" value="Submit" />
+          <input onClick={search} type="submit" value="Submit" />
         </form>
     </div>
 

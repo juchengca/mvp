@@ -3,6 +3,7 @@ var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+var spotify = require('../helpers/spotify');
 
 var client_id = '4b3b47eeab9f4e9aac51bba5fc463783'; // Your client id
 var client_secret = 'a3c9026446fc440592661142145521a2'; // Your secret
@@ -29,6 +30,8 @@ var app = express();
 
 
 app.use(express.static(__dirname + '/../client/dist'))
+   .use(express.json())
+   .use(express.urlencoded({ extended: true }))
    .use(cors())
    .use(cookieParser());
 
@@ -68,6 +71,13 @@ app.get('/login', function(req, res) {
 
    res.json(loginURL);
    */
+});
+
+app.post('/testSearch', function(req, res) {
+  console.log(req.body);
+  spotify.searchSpotify(req.body, (result) => {
+    res.send(result);
+  });
 });
 
 app.get('/callback', function(req, res) {
