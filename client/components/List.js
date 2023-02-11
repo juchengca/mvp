@@ -5,7 +5,7 @@ function List({songs}) {
   return (
 
     <div>
-      <h3>Song Library:</h3>
+      <h3 style={{backgroundColor: '#3B71CA', width: '150px', padding: '3px 8px', borderRadius: '5px'}}>SONG LIBRARY</h3>
       <ol>
         {songs.map((song) =>
           <li style={{marginBottom: 20, marginLeft: 0}} key={song.name}>

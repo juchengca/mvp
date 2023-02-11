@@ -16,7 +16,7 @@ function Search( {onSearch} ) {
   return (
 
     <div>
-      <h3>Search:</h3>
+      <h3 style={{backgroundColor: '#3B71CA', width: '83px', padding: '3px 8px', borderRadius: '5px', display: 'flex',  justifyContent:'left', alignItems:'center'}} > SEARCH</h3>
       <p>To search for a song, enter the artist then track name separated by a double dash (--)
         <br></br>
         (for ex: coldplay--yellow)

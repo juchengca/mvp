@@ -19,7 +19,7 @@ var createTable = () => {
 var createEntry = (name, artist, bpm, harkey, imgurl, callback) => {
   var conversionLetters = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
   harkey = conversionLetters[Number(harkey)];
-  var sql = `INSERT INTO songs (name, artist, bpm, harkey, imgurl) VALUES ('${name}', '${artist}', '${bpm}', '${harkey}', '${imgurl}')`;
+  var sql = `INSERT INTO songs (name, artist, bpm, harkey, imgurl) VALUES ("${name}", "${artist}", "${bpm}", "${harkey}", "${imgurl}")`;
   mysql_query(sql, function(err, result)   {
     if (err) {
       console.log(err);
