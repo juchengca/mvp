@@ -6,8 +6,8 @@ var cookieParser = require('cookie-parser');
 var spotify = require('../helpers/spotify');
 var db = require('../database/entry');
 
-var client_id = '4b3b47eeab9f4e9aac51bba5fc463783'; // Your client id
-var client_secret = 'a3c9026446fc440592661142145521a2'; // Your secret
+var client_id = ''; // Your client id
+var client_secret = ''; // Your secret
 var redirect_uri = 'http://localhost:3000/callback'; // Your redirect uri
 
 /**
